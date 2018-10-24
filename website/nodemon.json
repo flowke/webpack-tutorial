@@ -1,0 +1,8 @@
+{
+  "watch": [
+    "sidebars.json",
+    "siteConfig.js",
+    "pages/",
+    "../docs"
+  ]
+}
