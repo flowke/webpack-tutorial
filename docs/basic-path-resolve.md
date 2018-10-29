@@ -54,6 +54,8 @@ import c from 'lodash' // => /Users/nod/desktop/project/node_modules/lodash
 
 **具体规则:**
 
+以下是默认情况下的解析规则.
+
 在把路径解析成上述的基本路径之后, 还不能真正的定位文件, 还需要进一步解析:
 
 这个时候webpack的解析器会开始检查这个路径 是指向一个文件还是文件夹:
@@ -61,4 +63,62 @@ import c from 'lodash' // => /Users/nod/desktop/project/node_modules/lodash
 如果是个文件夹, 那么按照以下步骤定位:
   1. 尝试查找文件夹下的 package.json 这个文件
     1. 如果找到 package.json , 尝试找到里面的 main 字段描述的文件
-  2. 如果没有找到 package.json 或 package.json 里面没有main字段, 则尝试找当前文件下的 index.js 的文件
+  2. 如果没有找到 package.json 或 package.json 里面没有main字段, 或根据main字段没有找到有效的文件, 则尝试找当前文件下的 index.js 的文件
+
+如果是个文件
+
+
+## 你需要理解的 resolve 配置字段
+
+#### modules
+
+写模块路径的时候, 可以指定去哪个目录下搜索, 一下是其默认值:
+
+```js
+// 假设当前文件所在路径 : /Users/nod/desktop/project/
+
+// resolve 的配置
+{
+  resolve: {
+    modules: ['node_modules']
+  }
+}
+
+// 此时 引入文件
+import util from 'utils/getParams' // =>  /Users/nod/desktop/project/src/utils/getParams.js
+
+```
+
+#### alias
+
+写模块路径的时候, 你可以在这里创建一个别名, 一旦别名被匹配上, 就会替换别名所指定的路径: (优先于 modules) 
+
+```js
+// 假设当前文件所在路径 : /Users/nod/desktop/project/
+
+// resolve 的配置
+{
+  resolve: {
+    alias: {
+      utils: path.resolve(__dirname, './src/utils)
+    }
+  }
+}
+
+// 此时 引入文件
+import util from 'utils/getParams' // =>  /Users/nod/desktop/project/src/utils/getParams.js
+
+```
+
+#### aliasFields
+
+
+#### descriptionFiles
+
+#### enforceExtension
+
+#### extensions
+
+#### mainFields
+
+#### mainFiles
